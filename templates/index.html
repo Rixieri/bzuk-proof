@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupo BZUK - Investimentos Inteligentes com IA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #16a085;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark);
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            background-color: var(--primary);
+            padding: 15px 0;
+        }
+        
+        .token-price {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-right: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--secondary);
+            margin: 15px 0;
+        }
+        
+        .center-title .section-title:after {
+            margin: 15px auto;
+        }
+        
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+            border: none;
+            margin-bottom: 20px;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .value-card {
+            text-align: center;
+            padding: 25px 15px;
+        }
+        
+        .value-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .bg-light-custom {
+            background-color: var(--light);
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+            padding: 10px 25px;
+            font-weight: 600;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        .roadmap-step {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .roadmap-step:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--secondary);
+        }
+        
+        .roadmap-step:after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 23px;
+            width: 2px;
+            height: calc(100% + 25px);
+            background: var(--secondary);
+        }
+        
+        .roadmap-step:last-child:after {
+            display: none;
+        }
+        
+        .tokenomics-chart {
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .social-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            color: white;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .testimonial-card {
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .ai-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .loading {
+            opacity: 0.7;
+        }
+        
+        .calculator-card {
+            margin-top: 2rem;
+        }
+        
+        .calculator-input {
+            margin-bottom: 1rem;
+        }
+        
+        .calculator-result {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        a{
+  text-decoration: none;
+  color: white;
+  }
+
+a:hover{
+  text-decoration: underline;
+  color: white;
+  }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-chart-line me-2"></i>
+                <span class="fw-bold">Brazil UK Group</span>
+            </a>
+            
+            <!-- Preço do Token no Navbar -->
+            <div class="navbar-text token-price d-none d-md-block">
+                <i class="fas fa-coins me-1"></i>
+                <span id="tokenPrice">BZUK: $1.0000</span>
+            </div>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#strategy">Estratégia</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#token">Token</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Investir</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-4">Inteligência Artificial aplicada a investimentos</h1>
+                    <p class="lead mb-5">Robôs de trading automatizados que geram lucros consistentes no mercado DeFi</p>
+                    <a href="#contact" class="btn btn-light btn-lg me-3">Quero Investir</a>
+                    <a href="#strategy" class="btn btn-outline-light btn-lg">Como Funciona</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center">
+                    <h2 class="section-title center-title">O Grupo BZUK</h2>
+                    <p class="lead">Um grupo seleto de investidores que une expertise tradicional com tecnologia de ponta em trading algorítmico</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body p-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h4>Filosofia Colaborativa</h4>
+                            <p>Começamos como um pequeno grupo de amigos investidores, compartilhando estratégias e insights. Nossa estrutura permite decisões ágeis e foco em resultados.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body p-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <h4>Tecnologia de Ponta</h4>
+                            <p>Desenvolvemos sistemas de IA especializados em identificar oportunidades no mercado DeFi, executando trades com precisão e velocidade impossíveis para humanos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategy Section -->
+    <section id="strategy" class="py-5 bg-light-custom">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center">
+                    <h2 class="section-title center-title">Estratégia de Investimento</h2>
+                    <p class="lead">Como transformamos tecnologia em retornos consistentes</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body p-4">
+                            <div class="position-relative">
+                                <div class="feature-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <span class="ai-badge">
+                                    <i class="fas fa-brain"></i>
+                                </span>
+                            </div>
+                            <h4>Algoritmos de Trading</h4>
+                            <p>Nossos robôs operam 24/7 analisando milhões de dados de mercado para identificar padrões e oportunidades de arbitragem, yield farming e trading momentum.</p>
+                            <ul>
+                                <li>Análise de sentimentos em redes sociais</li>
+                                <li>Reconhecimento de padrões gráficos</li>
+                                <li>Execução em múltiplas exchanges simultaneamente</li>
+                                <li>Gestão automática de riscos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body p-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <h4>Modelo Tokenizado</h4>
+                            <p>Criamos o token BZUK como representação digital das ações do grupo. Todo lucro gerado pelos robôs é convertido para USDT e adicionado ao fundo da safe.</p>
+                            <ul>
+                                <li>Token lastreado 1:1 com USDT no lançamento</li>
+                                <li>Valorização constante através dos lucros operacionais</li>
+                                <li>Distribuição proporcional aos detentores de tokens</li>
+                                <li>Transparência total com proof-of-reserves</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Proposition -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2 class="section-title mb-4">Por que investir no BZUK?</h2>
+                    <p class="lead mb-5">Enquanto criptomoedas tradicionais estão sujeitas à volatilidade do mercado, o token BZUK oferece um modelo inovador:</p>
+                    
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="text-center">
+                                <i class="fas fa-arrow-up text-success fs-1 mb-3"></i>
+                                <h5>Valorização Constante</h5>
+                                <p>Os lucros gerados pelos robôs são adicionados ao fundo, aumentando continuamente o valor lastreado de cada token.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-4">
+                            <div class="text-center">
+                                <i class="fas fa-shield-alt text-primary fs-1 mb-3"></i>
+                                <h5>Proteção contra volatilidade</h5>
+                                <p>O lastro em USDT protege contra quedas bruscas do mercado cripto, enquanto participa dos ganhos operacionais.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-4">
+                            <div class="text-center">
+                                <i class="fas fa-balance-scale text-info fs-1 mb-3"></i>
+                                <h5>Transparência Total</h5>
+                                <p>Todos os trades e movimentações são auditáveis na blockchain, com relatórios regulares de performance.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Token Section -->
+    <section id="token" class="py-5 bg-light-custom">
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-8 text-center">
+                    <h2 class="section-title center-title">Token BZUK</h2>
+                    <p class="lead">Ações digitais com lastro real e valorização programada</p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card value-card">
+                        <i class="bi bi-coin text-warning fs-1"></i>
+                        <h5>Total Supply</h5>
+                        <h3 class="fw-bold" id="totalSupply">1,000,000</h3>
+                        <p class="text-muted">Tokens emitidos</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card value-card">
+                        <i class="bi bi-lock text-danger fs-1"></i>
+                        <h5>Reservado</h5>
+                        <h3 class="fw-bold" id="reserveSupply">600,000</h3>
+                        <p class="text-muted">Não circulando</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card value-card">
+                        <i class="bi bi-people text-success fs-1"></i>
+                        <h5>Circulating</h5>
+                        <h3 class="fw-bold" id="circulatingSupply">400,000</h3>
+                        <p class="text-muted">Em circulação</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6">
+                    <div class="card value-card">
+                        <i class="bi bi-cash-coin text-primary fs-1"></i>
+                        <h5>Saldo USDT</h5>
+                        <h3 class="fw-bold" id="usdtBalance">400,000</h3>
+                        <p class="text-muted">Na Safe</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6">
+                    <div class="card value-card">
+                        <i class="bi bi-graph-up text-info fs-1"></i>
+                        <h5>Valor por Token</h5>
+                        <h3 class="fw-bold" id="currentPrice">$1.0000</h3>
+                        <p class="text-muted">BZUK/USDT</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculadora do Investidor -->
+            <div class="card calculator-card">
+                <div class="card-body">
+                    <h5 class="text-center mb-3">💰 Calculadora do Investidor</h5>
+                    <div class="row">
+                        <div class="col-md-6 calculator-input">
+                            <input type="number" id="tokenAmount" class="form-control form-control-lg" placeholder="Quantidade de BZUK">
+                        </div>
+                        <div class="col-md-6 calculator-input">
+                            <button class="btn btn-success btn-lg w-100" onclick="calcularValor()">Calcular Valor</button>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-center">
+                        <p>Valor estimado em USDT:</p>
+                        <h4 id="resultado" class="calculator-result">-</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+<section id="contact" class="cta-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="fw-bold mb-4">Junte-se ao Grupo BZUK</h2>
+                <p class="lead mb-5">Invista em tokens lastreados com valorização baseada em performance real de algoritmos de IA</p>
+                
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body p-4">
+                                <h4 class="mb-4">Entre em Contato</h4>
+                                <form id="contactForm">
+                                    <div class="mb-3">
+                                        <input type="text" name="nome" class="form-control form-control-lg" placeholder="Seu Nome" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="email" name="email" class="form-control form-control-lg" placeholder="Seu Email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="number" name="valor" class="form-control form-control-lg" placeholder="Valor de Interesse (USDT)">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-lg w-100">Solicitar Informações</button>
+                                </form>
+                                <div id="formMessage" class="mt-3 alert" style="display: none;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="mt-4">Ou entre em contato diretamente: <strong><a href="https://t.me/BZUK_GROUP">Telegram</a></strong></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5>Grupo BZUK</h5>
+                    <p>Investimentos inteligentes com inteligência artificial no mercado DeFi.</p>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#about" class="text-white text-decoration-none">Sobre</a></li>
+                        <li><a href="#strategy" class="text-white text-decoration-none">Estratégia</a></li>
+                        <li><a href="#token" class="text-white text-decoration-none">Token</a></li>
+                        <li><a href="#contact" class="text-white text-decoration-none">Investir</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Conecte-se</h5>
+                    <a href="https://t.me/BZUK_GROUP" class="social-icon"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4">
+            <div class="text-center">
+                <p>&copy; 2025 Grupo BZUK. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.0/dist/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        // Configurações da Blockchain
+        const CONFIG = {
+            RPC_URL: "https://polygon-rpc.com",
+            TOKEN_ADDRESS: "0x0Eb8ef4D2843170D23aA029AB62DaB24d1194FeB",
+            USDT_ADDRESS: "0x6ab707Aca953eDAeFBc4fD23bA73294241490620",
+            SAFE_ADDRESS: "0x5a8217Fea97407091F21339ca84e83e35c10E599",
+            RESERVE_ADDRESSES: [
+                "0x25dADC09e2F80378bd427a8F1adaC3Afad4a6eA3"
+            ]
+        };
+
+        // ABI mínima para ERC20
+        const ERC20_ABI = [
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "decimals",
+                "outputs": [{"name": "", "type": "uint8"}],
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "totalSupply",
+                "outputs": [{"name": "", "type": "uint256"}],
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [{"name": "owner", "type": "address"}],
+                "name": "balanceOf",
+                "outputs": [{"name": "", "type": "uint256"}],
+                "type": "function"
+            }
+        ];
+
+        // Conexão com Web3
+        let web3;
+        try {
+            web3 = new Web3(new Web3.providers.HttpProvider(CONFIG.RPC_URL));
+        } catch (error) {
+            console.error('Erro ao conectar com a blockchain:', error);
+        }
+
+        // Contratos
+        const tokenContract = web3 ? new web3.eth.Contract(ERC20_ABI, CONFIG.TOKEN_ADDRESS) : null;
+        const usdtContract = web3 ? new web3.eth.Contract(ERC20_ABI, CONFIG.USDT_ADDRESS) : null;
+
+        // Função para formatar números
+        function formatNumber(num, decimals = 4) {
+            return Number(num).toLocaleString('pt-BR', {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            });
+        }
+
+        // Função para buscar dados da blockchain
+        async function fetchBlockchainData() {
+            if (!web3) {
+                console.error('Web3 não está disponível');
+                showPlaceholderData();
+                return;
+            }
+
+            try {
+                // Buscar decimals do token
+                const tokenDecimals = await tokenContract.methods.decimals().call();
+                const tokenDecimalFactor = 10 ** tokenDecimals;
+
+                // Buscar total supply
+                const totalSupply = await tokenContract.methods.totalSupply().call();
+                const totalSupplyFormatted = totalSupply / tokenDecimalFactor;
+
+                // Buscar saldos das reservas
+                let totalReserveBalance = 0;
+                for (const address of CONFIG.RESERVE_ADDRESSES) {
+                    const balance = await tokenContract.methods.balanceOf(address).call();
+                    totalReserveBalance += Number(balance);
+                }
+                const reserveBalanceFormatted = totalReserveBalance / tokenDecimalFactor;
+
+                // Calcular circulating supply
+                const circulatingSupply = totalSupplyFormatted - reserveBalanceFormatted;
+
+                // Buscar saldo USDT da Safe
+                const usdtDecimals = await usdtContract.methods.decimals().call();
+                const usdtDecimalFactor = 10 ** usdtDecimals;
+                const usdtBalance = await usdtContract.methods.balanceOf(CONFIG.SAFE_ADDRESS).call();
+                const usdtBalanceFormatted = usdtBalance / usdtDecimalFactor;
+
+                // Calcular preço do token
+                const tokenPrice = circulatingSupply > 0 ? usdtBalanceFormatted / circulatingSupply : 1;
+
+                // Atualizar a interface
+                updateUI({
+                    tokenPrice,
+                    circulatingSupply,
+                    totalSupply: totalSupplyFormatted,
+                    reserveBalance: reserveBalanceFormatted,
+                    usdtBalance: usdtBalanceFormatted
+                });
+
+            } catch (error) {
+                console.error('Erro ao buscar dados da blockchain:', error);
+                showPlaceholderData();
+            }
+        }
+
+        // Atualizar a interface com os dados
+        function updateUI(data) {
+            document.getElementById('tokenPrice').textContent = `BZUK: $${formatNumber(data.tokenPrice)}`;
+            document.getElementById('currentPrice').textContent = `$${formatNumber(data.tokenPrice)}`;
+            document.getElementById('circulatingSupply').textContent = formatNumber(data.circulatingSupply, 0);
+            document.getElementById('totalSupply').textContent = formatNumber(data.totalSupply, 0);
+            document.getElementById('reserveSupply').textContent = formatNumber(data.reserveBalance, 0);
+            document.getElementById('usdtBalance').textContent = formatNumber(data.usdtBalance, 4);
+            
+            // Atualizar variável global para a calculadora
+            window.tokenValue = data.tokenPrice;
+        }
+
+        // Mostrar dados placeholder em caso de erro
+        function showPlaceholderData() {
+            document.getElementById('tokenPrice').textContent = 'BZUK: $1.0000';
+            document.getElementById('currentPrice').textContent = '$1.0000';
+            document.getElementById('circulatingSupply').textContent = '400,000';
+            document.getElementById('totalSupply').textContent = '1,000,000';
+            document.getElementById('reserveSupply').textContent = '600,000';
+            document.getElementById('usdtBalance').textContent = '400,000';
+            
+            window.tokenValue = 1.0;
+        }
+
+        // Função da calculadora
+        function calcularValor() {
+            if (!window.tokenValue) {
+                document.getElementById("resultado").innerText = "Dados não carregados";
+                return;
+            }
+            
+            const qtd = parseFloat(document.getElementById("tokenAmount").value);
+            if (isNaN(qtd) || qtd <= 0) {
+                document.getElementById("resultado").innerText = "Insira uma quantidade válida";
+                return;
+            }
+            
+            const valor = qtd * window.tokenValue;
+            document.getElementById("resultado").innerText = `${formatNumber(valor)} USDT`;
+        }
+
+        // Inicializar quando a página carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Buscar dados da blockchain
+            fetchBlockchainData();
+            
+            // Atualizar a cada 30 segundos
+            setInterval(fetchBlockchainData, 30000);
+            
+            // Configurar evento para a calculadora
+            document.getElementById('tokenAmount').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    calcularValor();
+                }
+            });
+        });
+
+// Manipular envio do formulário
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const submitButton = form.querySelector('button[type="submit"]');
+    const messageDiv = document.getElementById('formMessage');
+    
+    // Mostrar loading
+    submitButton.disabled = true;
+    submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Enviando...';
+    messageDiv.style.display = 'none';
+    
+    try {
+        const formData = new FormData(form);
+        
+        const response = await fetch('/enviar_contato', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            messageDiv.className = 'mt-3 alert alert-success';
+            messageDiv.textContent = result.message;
+            form.reset();
+        } else {
+            messageDiv.className = 'mt-3 alert alert-danger';
+            messageDiv.textContent = result.message;
+        }
+        
+    } catch (error) {
+        messageDiv.className = 'mt-3 alert alert-danger';
+        messageDiv.textContent = 'Erro ao enviar mensagem. Tente novamente.';
+    } finally {
+        messageDiv.style.display = 'block';
+        submitButton.disabled = false;
+        submitButton.innerHTML = 'Solicitar Informações';
+        
+        // Rolagem suave para a mensagem
+        messageDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+});
+
+
+
+
+
+
+    </script>
+</body>
+</html>
