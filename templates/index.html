@@ -591,7 +591,7 @@ a:hover{
         const usdtContract = web3 ? new web3.eth.Contract(ERC20_ABI, CONFIG.USDT_ADDRESS) : null;
 
         // Função para formatar números
-        function formatNumber(num, decimals = 4) {
+        function formatNumber(num, decimals = 2) {
             return Number(num).toLocaleString('pt-BR', {
                 minimumFractionDigits: decimals,
                 maximumFractionDigits: decimals
@@ -652,12 +652,12 @@ a:hover{
 
         // Atualizar a interface com os dados
         function updateUI(data) {
-            document.getElementById('tokenPrice').textContent = `BZUK: $${formatNumber(data.tokenPrice)}`;
-            document.getElementById('currentPrice').textContent = `$${formatNumber(data.tokenPrice)}`;
+            document.getElementById('tokenPrice').textContent = `BZUK: $${formatNumber(data.tokenPrice, 2)}`;
+            document.getElementById('currentPrice').textContent = `$${formatNumber(data.tokenPrice, 2)}`;
             document.getElementById('circulatingSupply').textContent = formatNumber(data.circulatingSupply, 0);
             document.getElementById('totalSupply').textContent = formatNumber(data.totalSupply, 0);
             document.getElementById('reserveSupply').textContent = formatNumber(data.reserveBalance, 0);
-            document.getElementById('usdtBalance').textContent = formatNumber(data.usdtBalance, 4);
+            document.getElementById('usdtBalance').textContent = formatNumber(data.usdtBalance, 2);
             
             // Atualizar variável global para a calculadora
             window.tokenValue = data.tokenPrice;
@@ -665,8 +665,8 @@ a:hover{
 
         // Mostrar dados placeholder em caso de erro
         function showPlaceholderData() {
-            document.getElementById('tokenPrice').textContent = 'BZUK: $1.0000';
-            document.getElementById('currentPrice').textContent = '$1.0000';
+            document.getElementById('tokenPrice').textContent = 'BZUK: $1.00';
+            document.getElementById('currentPrice').textContent = '$1.00';
             document.getElementById('circulatingSupply').textContent = '400,000';
             document.getElementById('totalSupply').textContent = '1,000,000';
             document.getElementById('reserveSupply').textContent = '600,000';

@@ -56,7 +56,7 @@ except Exception as e:
     usdt_contract = None
 
 def formatar_quatro_decimais(valor):
-    return round(float(valor), 4) if valor else 0.0000
+    return round(float(valor), 2) if valor else 0.00
 
 def enviar_telegram(mensagem):
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
@@ -109,7 +109,7 @@ def index():
         
         return render_template(
             'index.html',
-            total_supply=formatar_quatro_decimais(total_supply_adj),
+            total_supply=formatar_quatro_decimais(total_supply_adj),    
             reserve_supply=formatar_quatro_decimais(reserve_balance_adj),
             circulating_supply=formatar_quatro_decimais(circulating_supply),
             usdt_balance=formatar_quatro_decimais(usdt_balance_adj),
