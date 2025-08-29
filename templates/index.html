@@ -38,6 +38,31 @@
             font-size: 0.9rem;
         }
         
+        /* Estilos para o seletor de idioma */
+        .language-selector {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        
+        .language-option {
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        .language-option.active {
+            color: white;
+            font-weight: bold;
+        }
+        
+        .language-separator {
+            color: rgba(255, 255, 255, 0.5);
+            margin: 0 2px;
+        }
+        
         .hero-section {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
@@ -216,6 +241,81 @@ a:hover{
   text-decoration: underline;
   color: white;
   }
+  
+  /* Novos estilos para as estatísticas */
+  .stats-row {
+      display: flex;
+      justify-content: space-between;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  
+  .stat-item {
+      text-align: center;
+      flex: 1;
+      padding: 0 15px;
+      position: relative;
+  }
+  
+  .stat-item:not(:last-child):after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 20%;
+      height: 60%;
+      width: 1px;
+      background-color: #dee2e6;
+  }
+  
+  .stat-label {
+      font-size: 0.9rem;
+      color: #6c757d;
+      margin-bottom: 5px;
+  }
+  
+  .stat-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--secondary);
+  }
+  
+  .stat-description {
+      font-size: 0.8rem;
+      color: #6c757d;
+      margin-top: 5px;
+  }
+  
+  @media (max-width: 768px) {
+      .stats-row {
+          flex-direction: column;
+      }
+      
+      .stat-item {
+          margin-bottom: 15px;
+          padding: 15px 0;
+      }
+      
+      .stat-item:not(:last-child):after {
+          display: none;
+      }
+  }
+  
+  /* Loading para as estatísticas */
+  .stats-loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100px;
+  }
+  
+  .stats-loading .spinner-border {
+      width: 3rem;
+      height: 3rem;
+      color: var(--secondary);
+  }
     </style>
 </head>
 <body>
@@ -231,6 +331,13 @@ a:hover{
             <div class="navbar-text token-price d-none d-md-block">
                 <i class="fas fa-coins me-1"></i>
                 <span id="tokenPrice">BZUK: $1.0000</span>
+            </div>
+            
+            <!-- Seletor de Idioma -->
+            <div class="language-selector d-none d-md-flex">
+                <span class="language-option active" data-lang="pt"></span>
+                <span class="language-separator"></span>
+                <span class="language-option" data-lang="en"></span>
             </div>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -344,7 +451,7 @@ a:hover{
                                 <i class="fas fa-coins"></i>
                             </div>
                             <h4>Modelo Tokenizado</h4>
-                            <p>Criamos o token BZUK como representação digital das ações do grupo. Todo lucro gerado pelos robôs é convertido para USDT e adicionado ao fundo da safe.</p>
+                            <p>Criamos o token BZUK como representação digital das ações do grupo. Todo lucro gerado pelos robôs é convertido para USDT and added to the safe fund.</p>
                             <ul>
                                 <li>Token lastreado 1:1 com USDT no lançamento</li>
                                 <li>Valorização constante através dos lucros operacionais</li>
@@ -446,6 +553,54 @@ a:hover{
                         <h3 class="fw-bold" id="currentPrice">$1.0000</h3>
                         <p class="text-muted">BZUK/USDT</p>
                     </div>
+                </div>
+            </div>
+
+            <!-- Nova linha de estatísticas -->
+            <div class="stats-row" id="statsContainer">
+                <div class="stat-item">
+                    <div class="stat-label">Último Mês</div>
+                    <div class="stat-value" id="lastMonth">
+                        <div class="stats-loading">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-description">2025</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Lucro Pago</div>
+                    <div class="stat-value" id="profitPaid">
+                        <div class="stats-loading">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-description">Total distribuído</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Máxima Token</div>
+                    <div class="stat-value" id="maxToken">
+                        <div class="stats-loading">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-description">Valor histórico</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">ROI</div>
+                    <div class="stat-value" id="roi">
+                        <div class="stats-loading">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-description">Retorno sobre investimento</div>
                 </div>
             </div>
 
@@ -553,6 +708,9 @@ a:hover{
             ]
         };
 
+        // URL do arquivo TXT no GitHub (substitua com sua URL real)
+        const GITHUB_STATS_URL = "https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/stats.txt";
+
         // ABI mínima para ERC20
         const ERC20_ABI = [
             {
@@ -578,7 +736,7 @@ a:hover{
             }
         ];
 
-        // Conexão com Web3
+        // Conexão con Web3
         let web3;
         try {
             web3 = new Web3(new Web3.providers.HttpProvider(CONFIG.RPC_URL));
@@ -692,10 +850,129 @@ a:hover{
             document.getElementById("resultado").innerText = `${formatNumber(valor)} USDT`;
         }
 
+        // Configuração do seletor de idioma
+        function setupLanguageSelector() {
+            const languageOptions = document.querySelectorAll('.language-option');
+            
+            languageOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const selectedLang = this.getAttribute('data-lang');
+                    
+                    // Atualizar a interface visual
+                    languageOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Aqui você pode implementar a lógica para mudar o idioma
+                    changeLanguage(selectedLang);
+                });
+            });
+        }
+        
+        // Função para mudar o idioma (exemplo básico)
+        function changeLanguage(lang) {
+            // Esta é uma implementação básica. Em um cenário real, você teria
+            // um sistema mais complexo com arquivos de tradução ou API
+            
+            console.log(`Idioma alterado para: ${lang}`);
+            
+            // Aqui você implementaria a lógica para trocar todo o texto do site
+            // Por enquanto, apenas mostra um alerta
+            alert(`Idioma alterado para ${lang === 'pt' ? 'Português' : 'Inglês'}`);
+            
+            // Em uma implementação real, você:
+            // 1. Carregaria um arquivo JSON com as traduções
+            // 2. Percorreria todos os elementos de texto substituindo pelos equivalentes
+            // 3. Atualizaria o atributo lang do html
+            document.documentElement.lang = lang;
+        }
+
+        // Função para carregar dados das estatísticas do GitHub
+        async function loadStatsFromGitHub() {
+            try {
+                // Buscar o arquivo TXT do GitHub
+                const response = await fetch(GITHUB_STATS_URL);
+                
+                if (!response.ok) {
+                    throw new Error(`Erro HTTP: ${response.status}`);
+                }
+                
+                const textData = await response.text();
+                
+                // Processar o conteúdo do arquivo TXT
+                const statsData = parseStatsText(textData);
+                
+                // Atualizar a interface com os dados
+                updateStatsUI(statsData);
+                
+            } catch (error) {
+                console.error('Erro ao carregar dados do GitHub:', error);
+                
+                // Em caso de erro, mostrar valores padrão
+                showDefaultStats();
+            }
+        }
+
+        // Função para processar o texto do arquivo TXT
+        function parseStatsText(text) {
+            const lines = text.split('\n');
+            const stats = {};
+            
+            lines.forEach(line => {
+                // Ignorar linhas vazias ou comentários (que começam com #)
+                if (line.trim() === '' || line.trim().startsWith('#')) {
+                    return;
+                }
+                
+                // Dividir a linha em chave e valor
+                const separatorIndex = line.indexOf(':');
+                if (separatorIndex !== -1) {
+                    const key = line.substring(0, separatorIndex).trim();
+                    const value = line.substring(separatorIndex + 1).trim();
+                    stats[key] = value;
+                }
+            });
+            
+            return stats;
+        }
+
+        // Atualizar a interface com os dados das estatísticas
+        function updateStatsUI(statsData) {
+            // Atualizar cada campo se existir nos dados
+            if (statsData['ultimo_mes']) {
+                document.getElementById('lastMonth').textContent = statsData['ultimo_mes'];
+            }
+            
+            if (statsData['lucro_pago']) {
+                document.getElementById('profitPaid').textContent = statsData['lucro_pago'];
+            }
+            
+            if (statsData['maxima_token']) {
+                document.getElementById('maxToken').textContent = statsData['maxima_token'];
+            }
+            
+            if (statsData['roi']) {
+                document.getElementById('roi').textContent = statsData['roi'];
+            }
+        }
+
+        // Mostrar valores padrão em caso de erro
+        function showDefaultStats() {
+            document.getElementById('lastMonth').textContent = "3.85%";
+            document.getElementById('profitPaid').textContent = "$38,250";
+            document.getElementById('maxToken').textContent = "$1.42";
+            document.getElementById('roi').textContent = "42.0%";
+        }
+
         // Inicializar quando a página carregar
         document.addEventListener('DOMContentLoaded', function() {
             // Buscar dados da blockchain
             fetchBlockchainData();
+            
+            // Configurar o seletor de idioma
+            setupLanguageSelector();
+            
+            // Carregar dados das estatísticas do GitHub
+            loadStatsFromGitHub();
             
             // Atualizar a cada 30 segundos
             setInterval(fetchBlockchainData, 30000);
@@ -752,12 +1029,6 @@ document.getElementById('contactForm').addEventListener('submit', async function
         messageDiv.scrollIntoView({ behavior: 'smooth' });
     }
 });
-
-
-
-
-
-
     </script>
 </body>
 </html>

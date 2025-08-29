@@ -1,0 +1,5 @@
+# Estatísticas do BZUK
+ultimo_mes: Ago/2025
+lucro_pago: $397,77
+maxima_token: $1.15
+roi: 15%
