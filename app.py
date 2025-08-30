@@ -3,14 +3,74 @@ from web3 import Web3
 import requests
 import os
 from dotenv import load_dotenv
+import logging
+
+# Configurar logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
 app = Flask(__name__)
 
 # Configurações do Telegram
-TELEGRAM_BOT_TOKEN = os.getenv('8486069262:AAG_4ZKTv3HaDJ61MPn8JRxb6N-5H9T-rpc')
-TELEGRAM_CHAT_ID = os.getenv('640010481')
+TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
+TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID')
+
+# Resto do código permanece igual...
+
+def enviar_telegram(mensagem):
+    # Verificar se as variáveis de ambiente estão configuradas
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+        error_msg = "Variáveis de ambiente do Telegram não configuradas"
+        logger.error(error_msg)
+        print(f"TELEGRAM_BOT_TOKEN: {TELEGRAM_BOT_TOKEN}")
+        print(f"TELEGRAM_CHAT_ID: {TELEGRAM_CHAT_ID}")
+        return False
+    
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    payload = {
+        'chat_id': TELEGRAM_CHAT_ID, 
+        'text': mensagem, 
+        'parse_mode': 'HTML'
+    }
+    
+    try:
+        # Adicionar timeout e verificação mais robusta
+        response = requests.post(url, json=payload, timeout=10)
+        
+        # Log para debugging
+        logger.info(f"Status Code: {response.status_code}")
+        logger.info(f"Response Text: {response.text}")
+        
+        if response.status_code == 200:
+            return True
+        else:
+            logger.error(f"Erro do Telegram API: {response.status_code} - {response.text}")
+            return False
+            
+    except requests.exceptions.Timeout:
+        logger.error("Timeout ao conectar com o Telegram")
+        return False
+    except requests.exceptions.ConnectionError:
+        logger.error("Erro de conexão com o Telegram")
+        return False
+    except Exception as e:
+        logger.error(f"Erro inesperado ao enviar para Telegram: {e}")
+        return False
+
+# Rota de health check para testar o Telegram
+@app.route('/health')
+def health_check():
+    telegram_status = "Funcionando" if enviar_telegram("Teste de saúde do bot") else "Falhou"
+    return jsonify({
+        "status": "online",
+        "telegram": telegram_status,
+        "token_configurado": bool(TELEGRAM_BOT_TOKEN),
+        "chat_id_configurado": bool(TELEGRAM_CHAT_ID)
+    })
+
+
 
 # Configurações Blockchain
 RPC_URL = "https://polygon-rpc.com"
