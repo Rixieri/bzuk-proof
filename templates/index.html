@@ -194,127 +194,118 @@
         </div>
     </section>
 
-    <!-- Token Section -->
-    <section id="token" class="py-5 bg-light-custom">
-        <div class="container">
-            <div class="row justify-content-center mb-5">
-                <div class="col-lg-8 text-center">
-                    <h2 class="section-title center-title">Token BZUK</h2>
-                    <p class="lead">Ações digitais com lastro real e valorização programada</p>
+<!-- Token Section -->
+<section id="token" class="py-5 bg-light-custom">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="section-title center-title">Token BZUK</h2>
+                <p class="lead">Ações digitais com lastro real e valorização programada</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Seus cards atuais aqui -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card value-card">
+                    <i class="bi bi-coin text-warning fs-1"></i>
+                    <h5>Total Supply</h5>
+                    <h3 class="fw-bold" id="totalSupply">1,000,000</h3>
+                    <p class="text-muted">Tokens emitidos</p>
                 </div>
             </div>
             
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-4">
-                    <div class="card value-card">
-                        <i class="bi bi-coin text-warning fs-1"></i>
-                        <h5>Total Supply</h5>
-                        <h3 class="fw-bold" id="totalSupply">1,000,000</h3>
-                        <p class="text-muted">Tokens emitidos</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="card value-card">
-                        <i class="bi bi-lock text-danger fs-1"></i>
-                        <h5>Reservado</h5>
-                        <h3 class="fw-bold" id="reserveSupply">600,000</h3>
-                        <p class="text-muted">Não circulando</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="card value-card">
-                        <i class="bi bi-people text-success fs-1"></i>
-                        <h5>Circulating</h5>
-                        <h3 class="fw-bold" id="circulatingSupply">400,000</h3>
-                        <p class="text-muted">Em circulação</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6">
-                    <div class="card value-card">
-                        <i class="bi bi-cash-coin text-primary fs-1"></i>
-                        <h5>Saldo USDT</h5>
-                        <h3 class="fw-bold" id="usdtBalance">400,000</h3>
-                        <p class="text-muted">Na Safe</p>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6">
-                    <div class="card value-card">
-                        <i class="bi bi-graph-up text-info fs-1"></i>
-                        <h5>Valor por Token</h5>
-                        <h3 class="fw-bold" id="currentPrice">$1.0000</h3>
-                        <p class="text-muted">BZUK/USDT</p>
-                    </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card value-card">
+                    <i class="bi bi-lock text-danger fs-1"></i>
+                    <h5>Reservado</h5>
+                    <h3 class="fw-bold" id="reserveSupply">600,000</h3>
+                    <p class="text-muted">Não circulando</p>
                 </div>
             </div>
-
-            <!-- Nova linha de estatísticas -->
-            <div class="stats-row" id="statsContainer">
-                <div class="stat-item">
-                    <div class="stat-label">Último Mês</div>
-                    <div class="stat-value" id="lastMonth">
-                        <div class="stats-loading">
-                            <div class="spinner-border" role="status">
-                                <span class="visually-hidden">Carregando...</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stat-description">2025</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Lucro Pago</div>
-                    <div class="stat-value" id="profitPaid">
-                        <div class="stats-loading">
-                            <div class="spinner-border" role="status">
-                                <span class="visually-hidden">Carregando...</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stat-description">Total distribuído</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">Máxima Token</div>
-                    <div class="stat-value" id="maxToken">
-                        <div class="stats-loading">
-                            <div class="spinner-border" role="status">
-                                <span class="visually-hidden">Carregando...</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stat-description">Valor histórico</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-label">ROI</div>
-                    <div class="stat-value" id="roi">
-                        <div class="stats-loading">
-                            <div class="spinner-border" role="status">
-                                <span class="visually-hidden">Carregando...</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stat-description">Retorno sobre investimento</div>
+            
+            <div class="col-md-6 col-lg-4">
+                <div class="card value-card">
+                    <i class="bi bi-people text-success fs-1"></i>
+                    <h5>Circulating</h5>
+                    <h3 class="fw-bold" id="circulatingSupply">400,000</h3>
+                    <p class="text-muted">Em circulação</p>
                 </div>
             </div>
-
-            <!-- Calculadora do Investidor -->
-            <div class="card calculator-card">
-                <div class="card-body">
-                    <h5 class="text-center mb-3">💰 Calculadora do Investidor</h5>
-                    <div class="row">
-                        <div class="col-md-6 calculator-input">
-                            <input type="number" id="tokenAmount" class="form-control form-control-lg" placeholder="Quantidade de BZUK">
-                        </div>
-                        <div class="col-md-6 calculator-input">
-                            <button class="btn btn-success btn-lg w-100" onclick="calcularValor()">Calcular Valor</button>
-                        </div>
-                    </div>
-                    <div class="mt-3 text-center">
-                        <p>Valor estimado em USDT:</p>
-                        <h4 id="resultado" class="calculator-result">-</h4>
-                    </div>
+            
+            <div class="col-md-6 col-lg-6">
+                <div class="card value-card">
+                    <i class="bi bi-cash-coin text-primary fs-1"></i>
+                    <h5>Saldo USDT</h5>
+                    <h3 class="fw-bold" id="usdtBalance">400,000</h3>
+                    <p class="text-muted">Na Safe - TVL</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-6">
+                <div class="card value-card">
+                    <i class="bi bi-graph-up text-info fs-1"></i>
+                    <h5>Valor por Token</h5>
+                    <h3 class="fw-bold" id="currentPrice">$1.0000</h3>
+                    <p class="text-muted">BZUK/USDT</p>
                 </div>
             </div>
         </div>
-    </section>
+
+        <!-- Calculadora do Investidor -->
+        <div class="card calculator-card mt-4">
+            <div class="card-body">
+                <h5 class="text-center mb-3">💰 Calculadora do Investidor</h5>
+                <div class="row">
+                    <div class="col-md-6 calculator-input">
+                        <input type="number" id="tokenAmount" class="form-control form-control-lg" placeholder="Quantidade de BZUK">
+                    </div>
+                    <div class="col-md-6 calculator-input">
+                        <button class="btn btn-success btn-lg w-100" onclick="calcularValor()">Calcular Valor</button>
+                    </div>
+                </div>
+                <div class="mt-3 text-center">
+                    <p>Valor estimado em USDT:</p>
+                    <h4 id="resultado" class="calculator-result">-</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- LINKS DOS CONTRATOS (NOVA SEÇÃO) -->
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <h4 class="mb-4">🔗 Contratos na Blockchain</h4>
+                
+                <div class="d-flex justify-content-center gap-4 flex-wrap">
+                    <!-- Contrato da Safe -->
+                    <a href="https://polygonscan.com/address/0x5a8217Fea97407091F21339ca84e83e35c10E599" 
+                       target="_blank" 
+                       class="btn btn-outline-success btn-lg">
+                        <i class="fas fa-vault me-2"></i>
+                        Contrato da Safe
+                    </a>
+                    
+                    <!-- Contrato do Token -->
+                    <a href="https://polygonscan.com/address/0x0Eb8ef4D2843170D23aA029AB62DaB24d1194FeB" 
+                       target="_blank" 
+                       class="btn btn-outline-success btn-lg">
+                        <i class="fas fa-coins me-2"></i>
+                        Contrato do Token BZUK
+                    </a>
+                </div>
+
+                <div class="mt-3">
+                    <p class="text-muted">
+                        <small>
+                            <i class="fas fa-shield-alt me-1"></i>
+                            Todos os contratos são verificados e auditáveis na Polygon blockchain
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
     <!-- CTA Section -->
 <section id="contact" class="cta-section">
@@ -347,7 +338,7 @@
                     </div>
                 </div>
                 
-                <p class="mt-4">Ou entre em contato diretamente: <strong><a href="https://t.me/BZUK_GROUP">Telegram</a></strong></p>
+                <p class="mt-4">Ou entre em contato diretamente: <strong><a href="https://t.me/BZUK_GROUP" target="_blank">Telegram</a></strong></p>
             </div>
         </div>
     </div>
@@ -372,7 +363,7 @@
                 </div>
                 <div class="col-lg-4 mb-4">
                     <h5>Conecte-se</h5>
-                    <a href="https://t.me/BZUK_GROUP" class="social-icon"><i class="fab fa-telegram"></i></a>
+                    <a href="https://t.me/BZUK_GROUP" class="social-icon" target="_blank"><i class="fab fa-telegram"></i></a>
                 </div>
             </div>
             <hr class="mt-4 mb-4">

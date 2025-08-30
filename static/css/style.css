@@ -305,3 +305,26 @@ color: white;
         display: none;
     }
 }
+
+.contract-links {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 15px;
+    border: 1px solid #dee2e6;
+}
+
+.contract-btn {
+    transition: all 0.3s ease;
+    border-width: 2px;
+    font-weight: 600;
+}
+
+.contract-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.contract-btn i {
+    font-size: 1.2em;
+}
