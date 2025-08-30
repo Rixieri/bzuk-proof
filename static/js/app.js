@@ -10,7 +10,7 @@ const CONFIG = {
 };
 
 // URL do arquivo TXT no GitHub (substitua com sua URL real)
-const GITHUB_STATS_URL = "https://raw.githubusercontent.com/Rixieri/bzuk-proof/refs/heads/main/stats.txt";
+const GITHUB_STATS_URL = "https://raw.githubusercontent.com/Rixieri/bzuk-proof/refs/heads/main/static/stats.txt";
 
 // ABI mínima para ERC20
 const ERC20_ABI = [
