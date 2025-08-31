@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
 </head>
 
 <body>
@@ -28,10 +29,10 @@
             </div>
 
             <!-- Seletor de Idioma -->
-            <div class="language-selector d-none d-md-flex">
-                <span class="language-option active" data-lang="pt"></span>
-                <span class="language-separator"></span>
-                <span class="language-option" data-lang="en"></span>
+            <div class="language-selector">
+                <span class="language-option active" data-lang="pt">PT</span>
+                <span class="language-separator">|</span>
+                <span class="language-option" data-lang="en">EN</span>
             </div>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -40,16 +41,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#about">Sobre</a>
+                        <a class="nav-link" href="#about" data-translate="menu_about">Sobre</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#strategy">Estratégia</a>
+                        <a class="nav-link" href="#strategy" data-translate="menu_strategy">Estratégia</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#token">Token</a>
+                        <a class="nav-link" href="#token" data-translate="menu_token">Token</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#contact">Investir</a>
+                        <a class="nav-link" href="#contact" data-translate="menu_invest">Investir</a>
                     </li>
                 </ul>
             </div>
@@ -61,11 +62,10 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <h1 class="display-4 fw-bold mb-4">Inteligência Artificial aplicada a investimentos</h1>
-                    <p class="lead mb-5">Robôs de trading automatizados que geram lucros consistentes no mercado DeFi
-                    </p>
-                    <a href="#contact" class="btn btn-light btn-lg me-3">Quero Investir</a>
-                    <a href="#strategy" class="btn btn-outline-light btn-lg">Como Funciona</a>
+                    <h1 class="display-4 fw-bold mb-4" data-translate="hero_title">Inteligência Artificial aplicada a investimentos</h1>
+                    <p class="lead mb-5" data-translate="hero_subtitle">Robôs de trading automatizados que geram lucros consistentes no mercado DeFi</p>
+                    <a href="#contact" class="btn btn-light btn-lg me-3" data-translate="hero_cta1">Quero Investir</a>
+                    <a href="#strategy" class="btn btn-outline-light btn-lg" data-translate="hero_cta2">Como Funciona</a>
                 </div>
             </div>
         </div>
@@ -76,9 +76,8 @@
         <div class="container">
             <div class="row justify-content-center mb-5">
                 <div class="col-lg-8 text-center">
-                    <h2 class="section-title center-title">O Grupo BZUK</h2>
-                    <p class="lead">Um grupo seleto de investidores que une expertise tradicional com tecnologia de
-                        ponta em trading algorítmico</p>
+                    <h2 class="section-title center-title" data-translate="about_title">O Grupo BZUK</h2>
+                    <p class="lead" data-translate="about_subtitle">Um grupo seleto de investidores que une expertise tradicional com tecnologia de ponta em trading algorítmico</p>
                 </div>
             </div>
             <div class="row">
@@ -88,9 +87,8 @@
                             <div class="feature-icon">
                                 <i class="fas fa-users"></i>
                             </div>
-                            <h4>Filosofia Colaborativa</h4>
-                            <p>Começamos como um pequeno grupo de amigos investidores, compartilhando estratégias e
-                                insights. Nossa estrutura permite decisões ágeis e foco em resultados.</p>
+                            <h4 data-translate="about_card1_title">Filosofia Colaborativa</h4>
+                            <p data-translate="about_card1_text">Começamos como um pequeno grupo de amigos investidores, compartilhando estratégias e insights. Nossa estrutura permite decisões ágeis e foco em resultados.</p>
                         </div>
                     </div>
                 </div>
@@ -100,9 +98,8 @@
                             <div class="feature-icon">
                                 <i class="fas fa-robot"></i>
                             </div>
-                            <h4>Tecnologia de Ponta</h4>
-                            <p>Desenvolvemos sistemas de IA especializados em identificar oportunidades no mercado DeFi,
-                                executando trades com precisão e velocidade impossíveis para humanos.</p>
+                            <h4 data-translate="about_card2_title">Tecnologia de Ponta</h4>
+                            <p data-translate="about_card2_text">Desenvolvemos sistemas de IA especializados em identificar oportunidades no mercado DeFi, executando trades com precisão e velocidade impossíveis para humanos.</p>
                         </div>
                     </div>
                 </div>
@@ -115,8 +112,8 @@
         <div class="container">
             <div class="row justify-content-center mb-5">
                 <div class="col-lg-8 text-center">
-                    <h2 class="section-title center-title">Estratégia de Investimento</h2>
-                    <p class="lead">Como transformamos tecnologia em retornos consistentes</p>
+                    <h2 class="section-title center-title" data-translate="strategy_title">Estratégia de Investimento</h2>
+                    <p class="lead" data-translate="strategy_subtitle">Como transformamos tecnologia em retornos consistentes</p>
                 </div>
             </div>
             <div class="row">
@@ -131,14 +128,13 @@
                                     <i class="fas fa-brain"></i>
                                 </span>
                             </div>
-                            <h4>Algoritmos de Trading</h4>
-                            <p>Nossos robôs operam 24/7 analisando milhões de dados de mercado para identificar padrões
-                                e oportunidades de arbitragem, yield farming e trading momentum.</p>
+                            <h4 data-translate="strategy_card1_title">Algoritmos de Trading</h4>
+                            <p data-translate="strategy_card1_text">Nossos robôs operam 24/7 analisando milhões de dados de mercado para identificar padrões e oportunidades de arbitragem, yield farming e trading momentum.</p>
                             <ul>
-                                <li>Análise de sentimentos em redes sociais</li>
-                                <li>Reconhecimento de padrões gráficos</li>
-                                <li>Execução em múltiplas exchanges simultaneamente</li>
-                                <li>Gestão automática de riscos</li>
+                                <li data-translate="strategy_card1_item1">Análise de sentimentos em redes sociais</li>
+                                <li data-translate="strategy_card1_item2">Reconhecimento de padrões gráficos</li>
+                                <li data-translate="strategy_card1_item3">Execução em múltiplas exchanges simultaneamente</li>
+                                <li data-translate="strategy_card1_item4">Gestão automática de riscos</li>
                             </ul>
                         </div>
                     </div>
@@ -149,14 +145,13 @@
                             <div class="feature-icon">
                                 <i class="fas fa-coins"></i>
                             </div>
-                            <h4>Modelo Tokenizado</h4>
-                            <p>Criamos o token BZUK como representação digital das ações do grupo. Todo lucro gerado
-                                pelos robôs é convertido para USDT and added to the safe fund.</p>
+                            <h4 data-translate="strategy_card2_title">Modelo Tokenizado</h4>
+                            <p data-translate="strategy_card2_text">Criamos o token BZUK como representação digital das ações do grupo. Todo lucro gerado pelos robôs é convertido para USDT and added to the safe fund.</p>
                             <ul>
-                                <li>Token lastreado 1:1 com USDT no lançamento</li>
-                                <li>Valorização constante através dos lucros operacionais</li>
-                                <li>Distribuição proporcional aos detentores de tokens</li>
-                                <li>Transparência total com proof-of-reserves</li>
+                                <li data-translate="strategy_card2_item1">Token lastreado 1:1 com USDT no lançamento</li>
+                                <li data-translate="strategy_card2_item2">Valorização constante através dos lucros operacionais</li>
+                                <li data-translate="strategy_card2_item3">Distribuição proporcional aos detentores de tokens</li>
+                                <li data-translate="strategy_card2_item4">Transparência total com proof-of-reserves</li>
                             </ul>
                         </div>
                     </div>
@@ -170,35 +165,31 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-center">
-                    <h2 class="section-title mb-4">Por que investir no BZUK?</h2>
-                    <p class="lead mb-5">Enquanto criptomoedas tradicionais estão sujeitas à volatilidade do mercado, o
-                        token BZUK oferece um modelo inovador:</p>
+                    <h2 class="section-title mb-4" data-translate="value_title">Por que investir no BZUK?</h2>
+                    <p class="lead mb-5" data-translate="value_subtitle">Enquanto criptomoedas tradicionais estão sujeitas à volatilidade do mercado, o token BZUK oferece um modelo inovador:</p>
 
                     <div class="row">
                         <div class="col-md-4 mb-4">
                             <div class="text-center">
                                 <i class="fas fa-arrow-up text-success fs-1 mb-3"></i>
-                                <h5>Valorização Constante</h5>
-                                <p>Os lucros gerados pelos robôs são adicionados ao fundo, aumentando continuamente o
-                                    valor lastreado de cada token.</p>
+                                <h5 data-translate="value_card1_title">Valorização Constante</h5>
+                                <p data-translate="value_card1_text">Os lucros gerados pelos robôs são adicionados ao fundo, aumentando continuamente o valor lastreado de cada token.</p>
                             </div>
                         </div>
 
                         <div class="col-md-4 mb-4">
                             <div class="text-center">
                                 <i class="fas fa-shield-alt text-primary fs-1 mb-3"></i>
-                                <h5>Proteção contra volatilidade</h5>
-                                <p>O lastro em USDT protege contra quedas bruscas do mercado cripto, enquanto participa
-                                    dos ganhos operacionais.</p>
+                                <h5 data-translate="value_card2_title">Proteção contra volatilidade</h5>
+                                <p data-translate="value_card2_text">O lastro em USDT protege contra quedas bruscas do mercado cripto, enquanto participa dos ganhos operacionais.</p>
                             </div>
                         </div>
 
                         <div class="col-md-4 mb-4">
                             <div class="text-center">
                                 <i class="fas fa-balance-scale text-info fs-1 mb-3"></i>
-                                <h5>Transparência Total</h5>
-                                <p>Todos os trades e movimentações são auditáveis na blockchain, com relatórios
-                                    regulares de performance.</p>
+                                <h5 data-translate="value_card3_title">Transparência Total</h5>
+                                <p data-translate="value_card3_text">Todos os trades e movimentações são auditáveis na blockchain, com relatórios regulares de performance.</p>
                             </div>
                         </div>
                     </div>
@@ -212,55 +203,54 @@
         <div class="container">
             <div class="row justify-content-center mb-5">
                 <div class="col-lg-8 text-center">
-                    <h2 class="section-title center-title">Token BZUK</h2>
-                    <p class="lead">Ações digitais com lastro real e valorização programada</p>
+                    <h2 class="section-title center-title" data-translate="token_title">Token BZUK</h2>
+                    <p class="lead" data-translate="token_subtitle">Ações digitais com lastro real e valorização programada</p>
                 </div>
             </div>
 
             <div class="row g-4">
-                <!-- Seus cards atuais aqui -->
                 <div class="col-md-6 col-lg-4">
                     <div class="card value-card">
                         <i class="bi bi-coin text-warning fs-1"></i>
-                        <h5>Total Supply</h5>
+                        <h5 data-translate="token_total">Total Supply</h5>
                         <h3 class="fw-bold" id="totalSupply">1,000,000</h3>
-                        <p class="text-muted">Tokens emitidos</p>
+                        <p class="text-muted" data-translate="token_total_desc">Tokens emitidos</p>
                     </div>
                 </div>
 
                 <div class="col-md-6 col-lg-4">
                     <div class="card value-card">
                         <i class="bi bi-lock text-danger fs-1"></i>
-                        <h5>Reservado</h5>
+                        <h5 data-translate="token_reserved">Reservado</h5>
                         <h3 class="fw-bold" id="reserveSupply">600,000</h3>
-                        <p class="text-muted">Não circulando</p>
+                        <p class="text-muted" data-translate="token_reserved_desc">Não circulando</p>
                     </div>
                 </div>
 
                 <div class="col-md-6 col-lg-4">
                     <div class="card value-card">
                         <i class="bi bi-people text-success fs-1"></i>
-                        <h5>Circulating</h5>
+                        <h5 data-translate="token_circulating">Circulating</h5>
                         <h3 class="fw-bold" id="circulatingSupply">400,000</h3>
-                        <p class="text-muted">Em circulação</p>
+                        <p class="text-muted" data-translate="token_circulating_desc">Em circulação</p>
                     </div>
                 </div>
 
                 <div class="col-md-6 col-lg-6">
                     <div class="card value-card">
                         <i class="bi bi-cash-coin text-primary fs-1"></i>
-                        <h5>Saldo USDT</h5>
+                        <h5 data-translate="token_balance">Saldo USDT</h5>
                         <h3 class="fw-bold" id="usdtBalance">400,000</h3>
-                        <p class="text-muted">Na Safe - TVL</p>
+                        <p class="text-muted" data-translate="token_balance_desc">Na Safe - TVL</p>
                     </div>
                 </div>
 
                 <div class="col-md-6 col-lg-6">
                     <div class="card value-card">
                         <i class="bi bi-graph-up text-info fs-1"></i>
-                        <h5>Valor por Token</h5>
+                        <h5 data-translate="token_value">Valor por Token</h5>
                         <h3 class="fw-bold" id="currentPrice">$1.0000</h3>
-                        <p class="text-muted">BZUK/USDT</p>
+                        <p class="text-muted" data-translate="token_value_desc">BZUK/USDT</p>
                     </div>
                 </div>
             </div>
@@ -268,7 +258,7 @@
             <!-- Nova linha de estatísticas -->
             <div class="stats-row" id="statsContainer">
                 <div class="stat-item">
-                    <div class="stat-label">Último Mês</div>
+                    <div class="stat-label" data-translate="stats_lastmonth">Último Mês</div>
                     <div class="stat-value" id="lastMonth">
                         <div class="stats-loading">
                             <div class="spinner-border" role="status">
@@ -279,7 +269,7 @@
                     <div class="stat-description">2025</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Lucro Pago</div>
+                    <div class="stat-label" data-translate="stats_profit">Lucro Pago</div>
                     <div class="stat-value" id="profitPaid">
                         <div class="stats-loading">
                             <div class="spinner-border" role="status">
@@ -287,10 +277,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="stat-description">Total distribuído</div>
+                    <div class="stat-description" data-translate="stats_profit_desc">Total distribuído</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">Máxima Token</div>
+                    <div class="stat-label" data-translate="stats_maxtoken">Máxima Token</div>
                     <div class="stat-value" id="maxToken">
                         <div class="stats-loading">
                             <div class="spinner-border" role="status">
@@ -298,10 +288,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="stat-description">Valor histórico</div>
+                    <div class="stat-description" data-translate="stats_maxtoken_desc">Valor histórico</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-label">ROI</div>
+                    <div class="stat-label" data-translate="stats_roi">ROI</div>
                     <div class="stat-value" id="roi">
                         <div class="stats-loading">
                             <div class="spinner-border" role="status">
@@ -309,49 +299,41 @@
                             </div>
                         </div>
                     </div>
-                    <div class="stat-description">Retorno sobre investimento</div>
+                    <div class="stat-description" data-translate="stats_roi_desc">Retorno sobre investimento</div>
                 </div>
             </div>
 
             <!-- Calculadora do Investidor -->
             <div class="card calculator-card mt-4">
                 <div class="card-body">
-                    <h5 class="text-center mb-3">💰 Calculadora do Investidor</h5>
+                    <h5 class="text-center mb-3" data-translate="calculator_title">💰 Calculadora do Investidor</h5>
                     <div class="row">
                         <div class="col-md-6 calculator-input">
                             <input type="number" id="tokenAmount" class="form-control form-control-lg"
-                                placeholder="Quantidade de BZUK">
+                                placeholder="Quantidade de BZUK" data-translate-placeholder="calculator_placeholder">
                         </div>
                         <div class="col-md-6 calculator-input">
-                            <button class="btn btn-success btn-lg w-100" onclick="calcularValor()">Calcular
-                                Valor</button>
+                            <button class="btn btn-success btn-lg w-100" onclick="calcularValor()" data-translate="calculator_button">Calcular Valor</button>
                         </div>
                     </div>
                     <div class="mt-3 text-center">
-                        <p>Valor estimado em USDT:</p>
+                        <p data-translate="calculator_result_label">Valor estimado em USDT:</p>
                         <h4 id="resultado" class="calculator-result">-</h4>
                     </div>
                 </div>
             </div>
 
-            <!-- LINKS DOS CONTRATOS (NOVA SEÇÃO) -->
+            <!-- LINKS DOS CONTRATOS -->
             <div class="row mt-5">
                 <div class="col-12 text-center">
-                    <h4 class="mb-4">🔗 Contratos na Blockchain</h4>
+                    <h4 class="mb-4" data-translate="contracts_title">🔗 Contratos na Blockchain</h4>
 
                     <div class="d-flex justify-content-center gap-4 flex-wrap">
-                        <!-- Contrato da Safe 
-                        <a href="https://polygonscan.com/address/0x5a8217Fea97407091F21339ca84e83e35c10E599"
-                            target="_blank" class="btn btn-outline-success btn-lg">
-                            <i class="fas fa-vault me-2"></i>
-                            Contrato da Safe
-                        </a> -->
-
                         <!-- Contrato do Token -->
                         <a href="https://polygonscan.com/address/0x0Eb8ef4D2843170D23aA029AB62DaB24d1194FeB"
                             target="_blank" class="btn btn-outline-success btn-lg">
                             <i class="fas fa-coins me-2"></i>
-                            Contrato do Token BZUK
+                            <span data-translate="contract_token">Contrato do Token BZUK</span>
                         </a>
                     </div>
 
@@ -359,7 +341,7 @@
                         <p class="text-muted">
                             <small>
                                 <i class="fas fa-shield-alt me-1"></i>
-                                Todos os contratos são verificados e auditáveis na Polygon blockchain
+                                <span data-translate="contracts_note">Todos os contratos são verificados e auditáveis na Polygon blockchain</span>
                             </small>
                         </p>
                     </div>
@@ -373,30 +355,28 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-center">
-                    <h2 class="fw-bold mb-4">Junte-se ao Grupo BZUK</h2>
-                    <p class="lead mb-5">Invista em tokens lastreados com valorização baseada em performance real de
-                        algoritmos de IA</p>
+                    <h2 class="fw-bold mb-4" data-translate="cta_title">Junte-se ao Grupo BZUK</h2>
+                    <p class="lead mb-5" data-translate="cta_subtitle">Invista em tokens lastreados com valorização baseada em performance real de algoritmos de IA</p>
 
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <div class="card">
                                 <div class="card-body p-4">
-                                    <h4 class="mb-4">Entre em Contato</h4>
+                                    <h4 class="mb-4" data-translate="form_title">Entre em Contato</h4>
                                     <form id="contactForm">
                                         <div class="mb-3">
                                             <input type="text" name="nome" class="form-control form-control-lg"
-                                                placeholder="Seu Nome" required>
+                                                placeholder="Seu Nome" data-translate-placeholder="form_name" required>
                                         </div>
                                         <div class="mb-3">
                                             <input type="email" name="email" class="form-control form-control-lg"
-                                                placeholder="Seu Email" required>
+                                                placeholder="Seu Email" data-translate-placeholder="form_email" required>
                                         </div>
                                         <div class="mb-3">
                                             <input type="number" name="valor" class="form-control form-control-lg"
-                                                placeholder="Valor de Interesse (USDT)">
+                                                placeholder="Valor de Interesse (USDT)" data-translate-placeholder="form_amount">
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-lg w-100">Solicitar
-                                            Informações</button>
+                                        <button type="submit" class="btn btn-primary btn-lg w-100" data-translate="form_button">Solicitar Informações</button>
                                     </form>
                                     <div id="formMessage" class="mt-3 alert" style="display: none;"></div>
                                 </div>
@@ -404,7 +384,7 @@
                         </div>
                     </div>
 
-                    <p class="mt-4">Ou entre em contato diretamente: <strong><a href="https://t.me/BZUK_GROUP"
+                    <p class="mt-4" data-translate="cta_contact">Ou entre em contato diretamente: <strong><a href="https://t.me/BZUK_GROUP"
                                 target="_blank">Telegram</a></strong></p>
                 </div>
             </div>
@@ -417,26 +397,26 @@
             <div class="row">
                 <div class="col-lg-4 mb-4">
                     <h5>Grupo BZUK</h5>
-                    <p>Investimentos inteligentes com inteligência artificial no mercado DeFi.</p>
+                    <p data-translate="footer_description">Investimentos inteligentes com inteligência artificial no mercado DeFi.</p>
                 </div>
                 <div class="col-lg-4 mb-4">
-                    <h5>Links</h5>
+                    <h5 data-translate="footer_links">Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#about" class="text-white text-decoration-none">Sobre</a></li>
-                        <li><a href="#strategy" class="text-white text-decoration-none">Estratégia</a></li>
-                        <li><a href="#token" class="text-white text-decoration-none">Token</a></li>
-                        <li><a href="#contact" class="text-white text-decoration-none">Investir</a></li>
+                        <li><a href="#about" class="text-white text-decoration-none" data-translate="menu_about">Sobre</a></li>
+                        <li><a href="#strategy" class="text-white text-decoration-none" data-translate="menu_strategy">Estratégia</a></li>
+                        <li><a href="#token" class="text-white text-decoration-none" data-translate="menu_token">Token</a></li>
+                        <li><a href="#contact" class="text-white text-decoration-none" data-translate="menu_invest">Investir</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4 mb-4">
-                    <h5>Conecte-se</h5>
+                    <h5 data-translate="footer_connect">Conecte-se</h5>
                     <a href="https://t.me/BZUK_GROUP" class="social-icon" target="_blank"><i
                             class="fab fa-telegram"></i></a>
                 </div>
             </div>
             <hr class="mt-4 mb-4">
             <div class="text-center">
-                <p>&copy; 2025 Grupo BZUK. Todos os direitos reservados.</p>
+                <p>&copy; 2025 Grupo BZUK. <span data-translate="footer_rights">Todos os direitos reservados.</span></p>
             </div>
         </div>
     </footer>
@@ -446,6 +426,8 @@
     <script src="https://cdn.jsdelivr.net/npm/web3@1.8.0/dist/web3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+       
 </body>
 
 </html>

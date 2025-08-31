@@ -18,21 +18,21 @@ const ERC20_ABI = [
         "constant": true,
         "inputs": [],
         "name": "decimals",
-        "outputs": [{"name": "", "type": "uint8"}],
+        "outputs": [{ "name": "", "type": "uint8" }],
         "type": "function"
     },
     {
         "constant": true,
         "inputs": [],
         "name": "totalSupply",
-        "outputs": [{"name": "", "type": "uint256"}],
+        "outputs": [{ "name": "", "type": "uint256" }],
         "type": "function"
     },
     {
         "constant": true,
-        "inputs": [{"name": "owner", "type": "address"}],
+        "inputs": [{ "name": "owner", "type": "address" }],
         "name": "balanceOf",
-        "outputs": [{"name": "", "type": "uint256"}],
+        "outputs": [{ "name": "", "type": "uint256" }],
         "type": "function"
     }
 ];
@@ -117,7 +117,7 @@ function updateUI(data) {
     document.getElementById('totalSupply').textContent = formatNumber(data.totalSupply, 0);
     document.getElementById('reserveSupply').textContent = formatNumber(data.reserveBalance, 0);
     document.getElementById('usdtBalance').textContent = formatNumber(data.usdtBalance, 2);
-    
+
     // Atualizar variável global para a calculadora
     window.tokenValue = data.tokenPrice;
 }
@@ -130,7 +130,7 @@ function showPlaceholderData() {
     document.getElementById('totalSupply').textContent = '1,000,000';
     document.getElementById('reserveSupply').textContent = '600,000';
     document.getElementById('usdtBalance').textContent = '400,000';
-    
+
     window.tokenValue = 1.0;
 }
 
@@ -140,13 +140,13 @@ function calcularValor() {
         document.getElementById("resultado").innerText = "Dados não carregados";
         return;
     }
-    
+
     const qtd = parseFloat(document.getElementById("tokenAmount").value);
     if (isNaN(qtd) || qtd <= 0) {
         document.getElementById("resultado").innerText = "Insira uma quantidade válida";
         return;
     }
-    
+
     const valor = qtd * window.tokenValue;
     document.getElementById("resultado").innerText = `${formatNumber(valor)} USDT`;
 }
@@ -154,15 +154,15 @@ function calcularValor() {
 // Configuração do seletor de idioma
 function setupLanguageSelector() {
     const languageOptions = document.querySelectorAll('.language-option');
-    
+
     languageOptions.forEach(option => {
-        option.addEventListener('click', function() {
+        option.addEventListener('click', function () {
             const selectedLang = this.getAttribute('data-lang');
-            
+
             // Atualizar a interface visual
             languageOptions.forEach(opt => opt.classList.remove('active'));
             this.classList.add('active');
-            
+
             // Aqui você pode implementar a lógica para mudar o idioma
             changeLanguage(selectedLang);
         });
@@ -173,13 +173,13 @@ function setupLanguageSelector() {
 function changeLanguage(lang) {
     // Esta é uma implementação básica. Em um cenário real, você teria
     // um sistema mais complexo com arquivos de tradução ou API
-    
+
     console.log(`Idioma alterado para: ${lang}`);
-    
+
     // Aqui você implementaria a lógica para trocar todo o texto do site
     // Por enquanto, apenas mostra um alerta
-    alert(`Idioma alterado para ${lang === 'pt' ? 'Português' : 'Inglês'}`);
-    
+    // alert(`Idioma alterado para ${lang === 'pt' ? 'Português' : 'Inglês'}`);
+
     // Em uma implementação real, você:
     // 1. Carregaria um arquivo JSON com as traduções
     // 2. Percorreria todos os elementos de texto substituindo pelos equivalentes
@@ -192,22 +192,22 @@ async function loadStatsFromGitHub() {
     try {
         // Buscar o arquivo TXT do GitHub
         const response = await fetch(GITHUB_STATS_URL);
-        
+
         if (!response.ok) {
             throw new Error(`Erro HTTP: ${response.status}`);
         }
-        
+
         const textData = await response.text();
-        
+
         // Processar o conteúdo do arquivo TXT
         const statsData = parseStatsText(textData);
-        
+
         // Atualizar a interface com os dados
         updateStatsUI(statsData);
-        
+
     } catch (error) {
         console.error('Erro ao carregar dados do GitHub:', error);
-        
+
         // Em caso de erro, mostrar valores padrão
         showDefaultStats();
     }
@@ -217,13 +217,13 @@ async function loadStatsFromGitHub() {
 function parseStatsText(text) {
     const lines = text.split('\n');
     const stats = {};
-    
+
     lines.forEach(line => {
         // Ignorar linhas vazias ou comentários (que começam com #)
         if (line.trim() === '' || line.trim().startsWith('#')) {
             return;
         }
-        
+
         // Dividir a linha em chave e valor
         const separatorIndex = line.indexOf(':');
         if (separatorIndex !== -1) {
@@ -232,7 +232,7 @@ function parseStatsText(text) {
             stats[key] = value;
         }
     });
-    
+
     return stats;
 }
 
@@ -242,15 +242,15 @@ function updateStatsUI(statsData) {
     if (statsData['ultimo_mes']) {
         document.getElementById('lastMonth').textContent = statsData['ultimo_mes'];
     }
-    
+
     if (statsData['lucro_pago']) {
         document.getElementById('profitPaid').textContent = statsData['lucro_pago'];
     }
-    
+
     if (statsData['maxima_token']) {
         document.getElementById('maxToken').textContent = statsData['maxima_token'];
     }
-    
+
     if (statsData['roi']) {
         document.getElementById('roi').textContent = statsData['roi'];
     }
@@ -265,28 +265,28 @@ function showDefaultStats() {
 }
 
 // Manipular envio do formulário
-document.getElementById('contactForm').addEventListener('submit', async function(e) {
+document.getElementById('contactForm').addEventListener('submit', async function (e) {
     e.preventDefault();
-    
+
     const form = e.target;
     const submitButton = form.querySelector('button[type="submit"]');
     const messageDiv = document.getElementById('formMessage');
-    
+
     // Mostrar loading
     submitButton.disabled = true;
     submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Enviando...';
     messageDiv.style.display = 'none';
-    
+
     try {
         const formData = new FormData(form);
-        
+
         const response = await fetch('/enviar_contato', {
             method: 'POST',
             body: formData
         });
-        
+
         const result = await response.json();
-        
+
         if (result.success) {
             messageDiv.className = 'mt-3 alert alert-success';
             messageDiv.textContent = result.message;
@@ -295,7 +295,7 @@ document.getElementById('contactForm').addEventListener('submit', async function
             messageDiv.className = 'mt-3 alert alert-danger';
             messageDiv.textContent = result.message;
         }
-        
+
     } catch (error) {
         messageDiv.className = 'mt-3 alert alert-danger';
         messageDiv.textContent = 'Erro ao enviar mensagem. Tente novamente.';
@@ -303,30 +303,296 @@ document.getElementById('contactForm').addEventListener('submit', async function
         messageDiv.style.display = 'block';
         submitButton.disabled = false;
         submitButton.innerHTML = 'Solicitar Informações';
-        
+
         // Rolagem suave para a mensagem
         messageDiv.scrollIntoView({ behavior: 'smooth' });
     }
 });
 
 // Inicializar quando a página carregar
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Buscar dados da blockchain
     fetchBlockchainData();
-    
+
     // Configurar o seletor de idioma
     setupLanguageSelector();
-    
+
     // Carregar dados das estatísticas do GitHub
     loadStatsFromGitHub();
-    
+
     // Atualizar a cada 30 segundos
     setInterval(fetchBlockchainData, 30000);
-    
+
     // Configurar evento para a calculadora
-    document.getElementById('tokenAmount').addEventListener('keypress', function(e) {
+    document.getElementById('tokenAmount').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             calcularValor();
         }
     });
+});
+
+
+// Dicionário de traduções
+const translations = {
+    'pt': {
+        // Menu
+        'menu_about': 'Sobre',
+        'menu_strategy': 'Estratégia',
+        'menu_token': 'Token',
+        'menu_invest': 'Investir',
+
+        // Hero Section
+        'hero_title': 'Inteligência Artificial aplicada a investimentos',
+        'hero_subtitle': 'Robôs de trading automatizados que geram lucros consistentes no mercado DeFi',
+        'hero_cta1': 'Quero Investir',
+        'hero_cta2': 'Como Funciona',
+
+        // About Section
+        'about_title': 'O Grupo BZUK',
+        'about_subtitle': 'Um grupo seleto de investidores que une expertise tradicional com tecnologia de ponta em trading algorítmico',
+        'about_card1_title': 'Filosofia Colaborativa',
+        'about_card1_text': 'Começamos como um pequeno grupo de amigos investidores, compartilhando estratégias e insights. Nossa estrutura permite decisões ágeis e foco em resultados.',
+        'about_card2_title': 'Tecnologia de Ponta',
+        'about_card2_text': 'Desenvolvemos sistemas de IA especializados em identificar oportunidades no mercado DeFi, executando trades com precisão e velocidade impossíveis para humanos.',
+
+        // Strategy Section
+        'strategy_title': 'Estratégia de Investimento',
+        'strategy_subtitle': 'Como transformamos tecnologia em retornos consistentes',
+        'strategy_card1_title': 'Algoritmos de Trading',
+        'strategy_card1_text': 'Nossos robôs operam 24/7 analisando milhões de dados de mercado para identificar padrões e oportunidades de arbitragem, yield farming e trading momentum.',
+        'strategy_card1_item1': 'Análise de sentimentos em redes sociais',
+        'strategy_card1_item2': 'Reconhecimento de padrões gráficos',
+        'strategy_card1_item3': 'Execução em múltiplas exchanges simultaneamente',
+        'strategy_card1_item4': 'Gestão automática de riscos',
+        'strategy_card2_title': 'Modelo Tokenizado',
+        'strategy_card2_text': 'Criamos o token BZUK como representação digital das ações do grupo. Todo lucro gerado pelos robôs é convertido para USDT e adicionado ao fundo Safe.',
+        'strategy_card2_item1': 'Token lastreado 1:1 com USDT no lançamento',
+        'strategy_card2_item2': 'Valorização constante através dos lucros operacionais',
+        'strategy_card2_item3': 'Distribuição proporcional aos detentores de tokens',
+        'strategy_card2_item4': 'Transparência total com proof-of-reserves',
+
+        // Value Proposition
+        'value_title': 'Por que investir no BZUK?',
+        'value_subtitle': 'Enquanto criptomoedas tradicionais estão sujeitas à volatilidade do mercado, o token BZUK oferece um modelo inovador:',
+        'value_card1_title': 'Valorização Constante',
+        'value_card1_text': 'Os lucros gerados pelos robôs são adicionados ao fundo, aumentando continuamente o valor lastreado de cada token.',
+        'value_card2_title': 'Proteção contra volatilidade',
+        'value_card2_text': 'O lastro em USDT protege contra quedas bruscas do mercado cripto, enquanto participa dos ganhos operacionais.',
+        'value_card3_title': 'Transparência Total',
+        'value_card3_text': 'Todos os trades e movimentações são auditáveis na blockchain, com relatórios regulares de performance.',
+
+        // Token Section
+        'token_title': 'Token BZUK',
+        'token_subtitle': 'Ações digitais com lastro real e valorização programada',
+        'token_total': 'Total Supply',
+        'token_total_desc': 'Tokens emitidos',
+        'token_reserved': 'Reservado',
+        'token_reserved_desc': 'Não circulando',
+        'token_circulating': 'Circulating',
+        'token_circulating_desc': 'Em circulação',
+        'token_balance': 'Saldo USDT',
+        'token_balance_desc': 'Na Safe - TVL',
+        'token_value': 'Valor por Token',
+        'token_value_desc': 'BZUK/USDT',
+
+        // Statistics
+        'stats_lastmonth': 'Último Mês',
+        'stats_profit': 'Lucro Pago',
+        'stats_profit_desc': 'Total distribuído',
+        'stats_maxtoken': 'Máxima Token',
+        'stats_maxtoken_desc': 'Valor histórico',
+        'stats_roi': 'ROI',
+        'stats_roi_desc': 'Retorno sobre investimento',
+
+        // Calculator
+        'calculator_title': '💰 Calculadora do Investidor',
+        'calculator_placeholder': 'Quantidade de BZUK',
+        'calculator_button': 'Calcular Valor',
+        'calculator_result_label': 'Valor estimado em USDT:',
+
+        // Contracts
+        'contracts_title': '🔗 Contratos na Blockchain',
+        'contract_token': 'Contrato do Token BZUK',
+        'contracts_note': 'Todos os contratos são verificados e auditáveis na Polygon blockchain',
+
+        // CTA Section
+        'cta_title': 'Junte-se ao Grupo BZUK',
+        'cta_subtitle': 'Invista em tokens lastreados com valorização baseada em performance real de algoritmos de IA',
+        'form_title': 'Entre em Contato',
+        'form_name': 'Seu Nome',
+        'form_email': 'Seu Email',
+        'form_amount': 'Valor de Interesse (USDT)',
+        'form_button': 'Solicitar Informações',
+        'cta_contact': 'Ou entre em contato diretamente:',
+
+        // Footer
+        'footer_description': 'Investimentos inteligentes com inteligência artificial no mercado DeFi.',
+        'footer_links': 'Links',
+        'footer_connect': 'Conecte-se',
+        'footer_rights': 'Todos os direitos reservados.'
+    },
+    'en': {
+        // Menu
+        'menu_about': 'About',
+        'menu_strategy': 'Strategy',
+        'menu_token': 'Token',
+        'menu_invest': 'Invest',
+
+        // Hero Section
+        'hero_title': 'Artificial Intelligence applied to investments',
+        'hero_subtitle': 'Automated trading robots that generate consistent profits in the DeFi market',
+        'hero_cta1': 'I Want to Invest',
+        'hero_cta2': 'How It Works',
+
+        // About Section
+        'about_title': 'The BZUK Group',
+        'about_subtitle': 'A select group of investors combining traditional expertise with cutting-edge algorithmic trading technology',
+        'about_card1_title': 'Collaborative Philosophy',
+        'about_card1_text': 'We started as a small group of investor friends, sharing strategies and insights. Our structure allows for agile decisions and focus on results.',
+        'about_card2_title': 'Cutting-Edge Technology',
+        'about_card2_text': 'We develop AI systems specialized in identifying opportunities in the DeFi market, executing trades with precision and speed impossible for humans.',
+
+        // Strategy Section
+        'strategy_title': 'Investment Strategy',
+        'strategy_subtitle': 'How we transform technology into consistent returns',
+        'strategy_card1_title': 'Trading Algorithms',
+        'strategy_card1_text': 'Our robots operate 24/7 analyzing millions of market data points to identify patterns and opportunities for arbitrage, yield farming, and momentum trading.',
+        'strategy_card1_item1': 'Social media sentiment analysis',
+        'strategy_card1_item2': 'Pattern recognition',
+        'strategy_card1_item3': 'Simultaneous execution on multiple exchanges',
+        'strategy_card1_item4': 'Automatic risk management',
+        'strategy_card2_title': 'Tokenized Model',
+        'strategy_card2_text': 'We created the BZUK token as a digital representation of the group shares. All profits generated by the robots are converted to USDT and added to the Safe fund.',
+        'strategy_card2_item1': 'Token backed 1:1 with USDT at launch',
+        'strategy_card2_item2': 'Constant appreciation through operational profits',
+        'strategy_card2_item3': 'Proportional distribution to token holders',
+        'strategy_card2_item4': 'Full transparency with proof-of-reserves',
+
+        // Value Proposition
+        'value_title': 'Why invest in BZUK?',
+        'value_subtitle': 'While traditional cryptocurrencies are subject to market volatility, the BZUK token offers an innovative model:',
+        'value_card1_title': 'Constant Appreciation',
+        'value_card1_text': 'Profits generated by the robots are added to the fund, continuously increasing the backed value of each token.',
+        'value_card2_title': 'Protection against volatility',
+        'value_card2_text': 'The USDT backing protects against sharp crypto market declines, while participating in operational gains.',
+        'value_card3_title': 'Full Transparency',
+        'value_card3_text': 'All trades and movements are auditable on the blockchain, with regular performance reports.',
+
+        // Token Section
+        'token_title': 'BZUK Token',
+        'token_subtitle': 'Digital shares with real backing and programmed appreciation',
+        'token_total': 'Total Supply',
+        'token_total_desc': 'Tokens issued',
+        'token_reserved': 'Reserved',
+        'token_reserved_desc': 'Not circulating',
+        'token_circulating': 'Circulating',
+        'token_circulating_desc': 'In circulation',
+        'token_balance': 'USDT Balance',
+        'token_balance_desc': 'In Safe - TVL',
+        'token_value': 'Value per Token',
+        'token_value_desc': 'BZUK/USDT',
+
+        // Statistics
+        'stats_lastmonth': 'Last Month',
+        'stats_profit': 'Profit Paid',
+        'stats_profit_desc': 'Total distributed',
+        'stats_maxtoken': 'All-Time High',
+        'stats_maxtoken_desc': 'Historical value',
+        'stats_roi': 'ROI',
+        'stats_roi_desc': 'Return on investment',
+
+        // Calculator
+        'calculator_title': '💰 Investor Calculator',
+        'calculator_placeholder': 'Amount of BZUK',
+        'calculator_button': 'Calculate Value',
+        'calculator_result_label': 'Estimated value in USDT:',
+
+        // Contracts
+        'contracts_title': '🔗 Blockchain Contracts',
+        'contract_token': 'BZUK Token Contract',
+        'contracts_note': 'All contracts are verified and auditable on Polygon blockchain',
+
+        // CTA Section
+        'cta_title': 'Join the BZUK Group',
+        'cta_subtitle': 'Invest in backed tokens with appreciation based on real AI algorithm performance',
+        'form_title': 'Contact Us',
+        'form_name': 'Your Name',
+        'form_email': 'Your Email',
+        'form_amount': 'Amount of Interest (USDT)',
+        'form_button': 'Request Information',
+        'cta_contact': 'Or contact us directly:',
+
+        // Footer
+        'footer_description': 'Smart investments with artificial intelligence in the DeFi market.',
+        'footer_links': 'Links',
+        'footer_connect': 'Connect',
+        'footer_rights': 'All rights reserved.'
+    }
+};
+
+// Função para aplicar traduções
+function applyTranslation(lang) {
+    // Atualizar todos os elementos com atributo data-translate
+    document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[lang][key]) {
+            element.textContent = translations[lang][key];
+        }
+    });
+
+    // Atualizar placeholders
+    document.querySelectorAll('[data-translate-placeholder]').forEach(element => {
+        const key = element.getAttribute('data-translate-placeholder');
+        if (translations[lang][key]) {
+            element.placeholder = translations[lang][key];
+        }
+    });
+
+    // Atualizar o atributo lang do html
+    document.documentElement.lang = lang;
+
+    // Atualizar o seletor de idioma ativo
+    document.querySelectorAll('.language-option').forEach(option => {
+        if (option.getAttribute('data-lang') === lang) {
+            option.classList.add('active');
+        } else {
+            option.classList.remove('active');
+        }
+    });
+
+    // Salvar preferência de idioma
+    localStorage.setItem('preferredLanguage', lang);
+}
+
+// Inicializar o sistema de tradução
+document.addEventListener('DOMContentLoaded', function () {
+    // Verificar se há um idioma salvo ou usar o padrão (pt)
+    const savedLanguage = localStorage.getItem('preferredLanguage') || 'pt';
+    applyTranslation(savedLanguage);
+
+    // Adicionar event listeners aos botões de idioma
+    document.querySelectorAll('.language-option').forEach(option => {
+        option.addEventListener('click', function () {
+            const lang = this.getAttribute('data-lang');
+            applyTranslation(lang);
+        });
+    });
+});
+
+// Função da calculadora (mantida do código original)
+function calcularValor() {
+    const tokenAmount = document.getElementById('tokenAmount').value;
+    const currentPrice = 1.00; // Este valor poderia vir de uma API
+    const resultado = tokenAmount * currentPrice;
+    document.getElementById('resultado').textContent = '$' + resultado.toFixed(2);
+}
+
+// Inicializar o formulário de contato
+document.getElementById('contactForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const formMessage = document.getElementById('formMessage');
+    formMessage.textContent = 'Mensagem enviada com sucesso! Em breve entraremos em contato.';
+    formMessage.classList.add('alert-success');
+    formMessage.style.display = 'block';
+    this.reset();
 });
