@@ -50,7 +50,7 @@ const tokenContract = web3 ? new web3.eth.Contract(ERC20_ABI, CONFIG.TOKEN_ADDRE
 const usdtContract = web3 ? new web3.eth.Contract(ERC20_ABI, CONFIG.USDT_ADDRESS) : null;
 
 // Função para formatar números
-function formatNumber(num, decimals = 2) {
+function formatNumber(num, decimals = 3) {
     return Number(num).toLocaleString('pt-BR', {
         minimumFractionDigits: decimals,
         maximumFractionDigits: decimals
