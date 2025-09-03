@@ -111,9 +111,9 @@ async function fetchBlockchainData() {
 
 // Atualizar a interface com os dados
 function updateUI(data) {
-    document.getElementById('tokenPriceMobile').textContent = `$${formatNumber(data.tokenPrice, 2)}`;
-    document.getElementById('tokenPrice').textContent = `BZUK: $${formatNumber(data.tokenPrice, 2)}`;
-    document.getElementById('currentPrice').textContent = `$${formatNumber(data.tokenPrice, 2)}`;
+    document.getElementById('tokenPriceMobile').textContent = `$${formatNumber(data.tokenPrice, 3)}`;
+    document.getElementById('tokenPrice').textContent = `BZUK: $${formatNumber(data.tokenPrice, 3)}`;
+    document.getElementById('currentPrice').textContent = `$${formatNumber(data.tokenPrice, 3)}`;
     document.getElementById('circulatingSupply').textContent = formatNumber(data.circulatingSupply, 0);
     document.getElementById('totalSupply').textContent = formatNumber(data.totalSupply, 0);
     document.getElementById('reserveSupply').textContent = formatNumber(data.reserveBalance, 0);
