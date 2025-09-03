@@ -17,7 +17,6 @@ app = Flask(__name__, static_folder='static')
 TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
 TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID')
 
-# Resto do código permanece igual...
 
 def enviar_telegram(mensagem):
     # Verificar se as variáveis de ambiente estão configuradas

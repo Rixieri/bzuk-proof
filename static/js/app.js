@@ -50,7 +50,7 @@ const tokenContract = web3 ? new web3.eth.Contract(ERC20_ABI, CONFIG.TOKEN_ADDRE
 const usdtContract = web3 ? new web3.eth.Contract(ERC20_ABI, CONFIG.USDT_ADDRESS) : null;
 
 // Função para formatar números
-function formatNumber(num, decimals = 3) {
+function formatNumber(num, decimals = 2) {
     return Number(num).toLocaleString('pt-BR', {
         minimumFractionDigits: decimals,
         maximumFractionDigits: decimals
@@ -113,7 +113,6 @@ async function fetchBlockchainData() {
 function updateUI(data) {
     document.getElementById('tokenPriceMobile').textContent = `$${formatNumber(data.tokenPrice, 2)}`;
     document.getElementById('tokenPrice').textContent = `BZUK: $${formatNumber(data.tokenPrice, 2)}`;
-    document.getElementById('tokenPrice').textContent = `BZUK: $${formatNumber(data.tokenPrice, 2)}`;
     document.getElementById('currentPrice').textContent = `$${formatNumber(data.tokenPrice, 2)}`;
     document.getElementById('circulatingSupply').textContent = formatNumber(data.circulatingSupply, 0);
     document.getElementById('totalSupply').textContent = formatNumber(data.totalSupply, 0);
@@ -149,7 +148,7 @@ function calcularValor() {
         return;
     }
 
-    const valor = qtd * window.tokenValue;
+    const valor = qtd * window.tokenValue
     document.getElementById("resultado").innerText = `${formatNumber(valor)} USDT`;
 }
 
@@ -584,7 +583,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // Função da calculadora (mantida do código original)
 function calcularValor() {
     const tokenAmount = document.getElementById('tokenAmount').value;
-    const currentPrice = 1.00; // Este valor poderia vir de uma API
+    const currentPrice = window.tokenValue; // Este valor poderia vir de uma API
     const resultado = tokenAmount * currentPrice;
     document.getElementById('resultado').textContent = '$' + resultado.toFixed(2);
 }
