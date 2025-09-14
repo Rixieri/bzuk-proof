@@ -57,57 +57,142 @@ function formatNumber(num, decimals = 2) {
     });
 }
 
-// Função para buscar dados da blockchain
+// ---------- HELPERS ----------
+
+// Faz uma chamada segura ao contrato (retorna string ou null). Tenta 'retries' vezes.
+async function safeCall(contract, method, args = [], retries = 1) {
+    if (!contract || !contract.methods || !contract.methods[method]) {
+        console.warn(`safeCall: método inválido ${method}`);
+        return null;
+    }
+    for (let attempt = 0; attempt <= retries; attempt++) {
+        try {
+            return await contract.methods[method](...args).call();
+        } catch (err) {
+            console.warn(`safeCall: erro ${method} attempt ${attempt + 1}/${retries + 1}`, err);
+            if (attempt < retries) await new Promise(r => setTimeout(r, 300));
+        }
+    }
+    return null;
+}
+
+// Converte um bigint raw (string/BigInt) em string decimal humana com 'displayDecimals' frações (trim trailing zeros)
+function bigIntToDecimalString(raw, decimals, displayDecimals = 6) {
+    const s = (typeof raw === 'bigint') ? raw.toString() : (raw || '0').toString();
+    if (decimals === 0) return s;
+    const neg = s.startsWith('-');
+    const abs = neg ? s.slice(1) : s;
+    // garante comprimento mínimo
+    const padded = abs.padStart(decimals + 1, '0');
+    const intPart = padded.slice(0, padded.length - decimals);
+    let fracPart = padded.slice(-decimals).slice(0, displayDecimals);
+    // remove zeros à direita
+    fracPart = fracPart.replace(/0+$/, '');
+    const out = fracPart ? `${intPart}.${fracPart}` : intPart;
+    return neg ? '-' + out : out;
+}
+
+// Converte um BigInt 'scaled' (valor * 10^precision) em string decimal (precision casas)
+function scaledBigIntToString(nBigInt, precision) {
+    const s = nBigInt.toString();
+    if (precision === 0) return s;
+    const neg = s.startsWith('-');
+    const abs = neg ? s.slice(1) : s;
+    if (abs.length <= precision) {
+        const zeros = '0'.repeat(precision - abs.length + 1);
+        return (neg ? '-' : '') + '0.' + zeros + abs;
+    } else {
+        const intPart = abs.slice(0, abs.length - precision);
+        let frac = abs.slice(abs.length - precision);
+        // trim trailing zeros
+        frac = frac.replace(/0+$/, '');
+        return (neg ? '-' : '') + intPart + (frac ? '.' + frac : '');
+    }
+}
+
+// ---------- FETCH MELHORADO ----------
 async function fetchBlockchainData() {
-    if (!web3) {
-        console.error('Web3 não está disponível');
+    if (!web3 || !tokenContract || !usdtContract) {
+        console.error('Web3 ou contratos não estão prontos');
         showPlaceholderData();
         return;
     }
 
     try {
-        // Buscar decimals do token
-        const tokenDecimals = await tokenContract.methods.decimals().call();
-        const tokenDecimalFactor = 10 ** tokenDecimals;
+        // buscar decimals e totalSupply em paralelo
+        const [tokenDecimalsRaw, usdtDecimalsRaw, totalSupplyRaw] = await Promise.all([
+            safeCall(tokenContract, 'decimals', [], 1),
+            safeCall(usdtContract, 'decimals', [], 1),
+            safeCall(tokenContract, 'totalSupply', [], 1)
+        ]);
 
-        // Buscar total supply
-        const totalSupply = await tokenContract.methods.totalSupply().call();
-        const totalSupplyFormatted = totalSupply / tokenDecimalFactor;
+        const tokenDecimals = Number.isFinite(parseInt(tokenDecimalsRaw, 10)) ? parseInt(tokenDecimalsRaw, 10) : 18;
+        const usdtDecimals = Number.isFinite(parseInt(usdtDecimalsRaw, 10)) ? parseInt(usdtDecimalsRaw, 10) : 6;
 
-        // Buscar saldos das reservas
-        let totalReserveBalance = 0;
-        for (const address of CONFIG.RESERVE_ADDRESSES) {
-            const balance = await tokenContract.methods.balanceOf(address).call();
-            totalReserveBalance += Number(balance);
+        // buscar saldos das reservas (paralelo)
+        const reservePromises = CONFIG.RESERVE_ADDRESSES.map(addr => safeCall(tokenContract, 'balanceOf', [addr], 1));
+        const reserveRawArray = await Promise.all(reservePromises);
+
+        // buscar saldo USDT da safe
+        const usdtBalanceRaw = await safeCall(usdtContract, 'balanceOf', [CONFIG.SAFE_ADDRESS], 1);
+
+        // normaliza strings -> BigInt (usa '0' se null)
+        const totalSupplyBN = BigInt((totalSupplyRaw || '0').toString());
+        let totalReserveBN = 0n;
+        for (const r of reserveRawArray) {
+            totalReserveBN += BigInt((r || '0').toString());
         }
-        const reserveBalanceFormatted = totalReserveBalance / tokenDecimalFactor;
+        const circulatingBN = totalSupplyBN > totalReserveBN ? (totalSupplyBN - totalReserveBN) : 0n;
 
-        // Calcular circulating supply
-        const circulatingSupply = totalSupplyFormatted - reserveBalanceFormatted;
+        // se circulating zero, não dá para calcular preço (evita divisão por zero)
+        if (circulatingBN === 0n) {
+            console.warn('Circulating supply = 0 -> usando placeholder');
+            showPlaceholderData();
+            return;
+        }
 
-        // Buscar saldo USDT da Safe
-        const usdtDecimals = await usdtContract.methods.decimals().call();
-        const usdtDecimalFactor = 10 ** usdtDecimals;
-        const usdtBalance = await usdtContract.methods.balanceOf(CONFIG.SAFE_ADDRESS).call();
-        const usdtBalanceFormatted = usdtBalance / usdtDecimalFactor;
+        // cálculo do preço usando BigInt:
+        // tokenPrice = (usdtBalance / 10^usdtDecimals) / (circulating / 10^tokenDecimals)
+        // => tokenPrice = (usdtBalance * 10^tokenDecimals) / (circulating * 10^usdtDecimals)
+        // para preservar precisão, escalamos por "pricePrecision"
+        const pricePrecision = 9; // casas internas de precisão (ajuste se quiser mais)
+        const scale = 10n ** BigInt(pricePrecision);
 
-        // Calcular preço do token
-        const tokenPrice = circulatingSupply > 0 ? usdtBalanceFormatted / circulatingSupply : 1;
+        const usdtBN = BigInt((usdtBalanceRaw || '0').toString());
+        const numerator = usdtBN * (10n ** BigInt(tokenDecimals)) * scale;
+        const denominator = circulatingBN * (10n ** BigInt(usdtDecimals));
 
-        // Atualizar a interface
+        const priceScaled = denominator === 0n ? 0n : (numerator / denominator); // inteiro = price * 10^pricePrecision
+        const tokenPriceStr = scaledBigIntToString(priceScaled, pricePrecision); // string "123.456..."
+        const tokenPriceNumber = parseFloat(tokenPriceStr);
+
+        if (!isFinite(tokenPriceNumber) || tokenPriceNumber <= 0) {
+            console.warn('Preço inválido calculado -> usando placeholder');
+            showPlaceholderData();
+            return;
+        }
+
+        // preparar valores legíveis para UI
+        const circulatingStr = bigIntToDecimalString(circulatingBN, tokenDecimals, 0); // exibe sem casas
+        const totalSupplyStr = bigIntToDecimalString(totalSupplyBN, tokenDecimals, 0);
+        const reserveStr = bigIntToDecimalString(totalReserveBN, tokenDecimals, 0);
+        const usdtBalanceStr = bigIntToDecimalString(usdtBN, usdtDecimals, 2);
+
+        // atualizar UI (passa valores numéricos para formatNumber quando apropriado)
         updateUI({
-            tokenPrice,
-            circulatingSupply,
-            totalSupply: totalSupplyFormatted,
-            reserveBalance: reserveBalanceFormatted,
-            usdtBalance: usdtBalanceFormatted
+            tokenPrice: tokenPriceNumber,
+            circulatingSupply: Number(circulatingStr.replace(/\D/g,'')) || parseFloat(circulatingStr),
+            totalSupply: Number(totalSupplyStr.replace(/\D/g,'')) || parseFloat(totalSupplyStr),
+            reserveBalance: Number(reserveStr.replace(/\D/g,'')) || parseFloat(reserveStr),
+            usdtBalance: parseFloat(usdtBalanceStr)
         });
 
     } catch (error) {
-        console.error('Erro ao buscar dados da blockchain:', error);
+        console.error('Erro geral ao buscar dados da blockchain:', error);
         showPlaceholderData();
     }
 }
+
 
 // Atualizar a interface com os dados
 function updateUI(data) {
@@ -322,7 +407,7 @@ document.addEventListener('DOMContentLoaded', function () {
     loadStatsFromGitHub();
 
     // Atualizar a cada 30 segundos
-    setInterval(fetchBlockchainData, 30000);
+    // setInterval(fetchBlockchainData, 30000);
 
     // Configurar evento para a calculadora
     document.getElementById('tokenAmount').addEventListener('keypress', function (e) {
