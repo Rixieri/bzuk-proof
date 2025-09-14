@@ -306,6 +306,10 @@ color: white;
     }
 }
 
+.navbar a:hover {
+    text-decoration: none !important;
+}
+
 .contract-links {
     margin-top: 3rem;
     padding: 2rem;

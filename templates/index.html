@@ -11,10 +11,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
+    <link rel="icon" href="/static/images/favicon.ico">
     <link rel="manifest" href="/site.webmanifest">
+
+    <meta name="msapplication-TileColor" content="#2c3e50">
+    <meta name="theme-color" content="#2c3e50">
 
 </head>
 
@@ -22,8 +26,8 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-chart-line me-2"></i>
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="/static/images/logo.png" alt="BZUK Logo" height="40" class="me-2">
                 <span class="fw-bold">Brazil UK Group</span>
             </a>
 
