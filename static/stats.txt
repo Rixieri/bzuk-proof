@@ -1,5 +1,5 @@
 # Estatísticas do BZUK
-ultimo_mes: Agosto
-lucro_pago: $413,77
-maxima_token: $1.16
-roi: 16,15%
+ultimo_mes: Setembro
+lucro_pago: $423,00
+maxima_token: $1.14
+roi: 14%
