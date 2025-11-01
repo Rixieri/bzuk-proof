@@ -1,5 +1,5 @@
 # Estatísticas do BZUK
-ultimo_mes: Outubro
+ultimo_mes: October
 lucro_pago: $307.44
 maxima_token: $1.08
 roi: 8%
