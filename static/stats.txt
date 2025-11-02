@@ -1,4 +1,4 @@
-# Estatísticas do BZUK
+# Estatísticas do BZUK.
 ultimo_mes: October
 lucro_pago: $307.44
 maxima_token: $1.08
