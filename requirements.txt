@@ -1,7 +1,8 @@
 Flask==2.3.3
-web3==6.0.0  # MUDE para versão 6.0.0 (mais estável)
+web3==6.0.0
 python-dotenv==1.0.0
 requests==2.31.0
 gunicorn==21.2.0
 setuptools==69.5.1
-wheel>=0.42.0
+wheel==0.42.0
+--no-binary :all: setuptools  # FORÇA compilação do zero
