@@ -207,4 +207,6 @@ def enviar_contato():
         return jsonify({'success': False, 'message': 'Erro interno do servidor'})
 
 if __name__ == '__main__':
-    app.run(debug=os.getenv('FLASK_DEBUG', 'False').lower() == 'true')
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host='0.0.0.0', port=port)
+    #app.run(debug=os.getenv('FLASK_DEBUG', 'False').lower() == 'true')
