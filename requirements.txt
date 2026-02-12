@@ -1,6 +1,7 @@
 Flask==2.3.3
-web3==6.11.0
+web3==6.0.0  # MUDE para versão 6.0.0 (mais estável)
 python-dotenv==1.0.0
 requests==2.31.0
 gunicorn==21.2.0
 setuptools>=70.0.0
+wheel>=0.42.0
